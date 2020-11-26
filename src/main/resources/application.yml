@@ -1,0 +1,37 @@
+spring:
+  profiles:
+    active: prod
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://124.70.129.91:3306/python_mysql?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: KXTsoft@2010
+
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      auto-commit: true
+      pool-name: hikari
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: select 1
+  jpa:
+    database: mysql
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        format_sql: true
+    open-in-view: true
+  application:
+    name: haagedzd-sign
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 212.64.18.91:8848
+server:
+  port: 8998

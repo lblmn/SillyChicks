@@ -1,0 +1,9 @@
+logging:
+  level:
+    root: info
+    com:
+      bing: info
+
+spring:
+  jpa:
+    show-sql: true
