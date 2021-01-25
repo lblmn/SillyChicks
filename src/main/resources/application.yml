@@ -1,6 +1,7 @@
 spring:
   profiles:
     active: prod
+  #    active: dev
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://124.70.129.91:3306/python_mysql?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false
@@ -29,9 +30,17 @@ spring:
     open-in-view: true
   application:
     name: haagedzd-sign
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 212.64.18.91:8848
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 124.70.154.45:8848
+
 server:
   port: 8998
+
+
+generate:
+  ip: 124.70.129.91
+  username: root
+  password: KXTsoft@2010
+  database: haa_org_data

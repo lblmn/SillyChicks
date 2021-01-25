@@ -2,6 +2,7 @@ package com.bing.haagendzs.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.bing.haagendzs.models.wxpush.Result;
 import com.bing.haagendzs.models.wxpush.*;
 
 import java.util.HashMap;

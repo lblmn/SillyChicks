@@ -1,7 +1,8 @@
 package com.bing.haagendzs.controllers;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bing.haagendzs.service.SignService;
+import com.bing.haagendzs.services.NewSignService;
+import com.bing.haagendzs.services.SignService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,9 @@ public class PortalController {
     @Resource
     private SignService signService;
 
+    @Resource
+    private NewSignService newSignService;
+
     @GetMapping("/check")
     public JSONObject checkLogin() {
         return signService.check();
@@ -23,6 +27,11 @@ public class PortalController {
     @GetMapping("/sign")
     public JSONObject sign() {
         return signService.sign();
+    }
+
+    @GetMapping("/signNew")
+    public JSONObject signNew() {
+        return newSignService.sign();
     }
 
 }

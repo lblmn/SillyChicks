@@ -1,11 +1,11 @@
-package com.bing.haagendzs.service.impl;
+package com.bing.haagendzs.services.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bing.haagendzs.models.HaagendazsToken;
 import com.bing.haagendzs.models.SignHistory;
 import com.bing.haagendzs.repositories.SignHistoryRepository;
 import com.bing.haagendzs.repositories.TokenRepository;
-import com.bing.haagendzs.service.SignService;
+import com.bing.haagendzs.services.SignService;
 import com.bing.haagendzs.utils.MessageSender;
 import com.bing.haagendzs.utils.RequestUtil;
 import lombok.extern.log4j.Log4j2;
