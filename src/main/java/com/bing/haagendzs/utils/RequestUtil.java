@@ -59,10 +59,10 @@ public class RequestUtil {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            String requetResult = Objects.requireNonNull(response.body()).string();
-            log.error(requetResult);
-            if (!StringUtils.isEmpty(requetResult)) {
-                _return = JSONObject.parseObject(requetResult);
+            String requestResult = Objects.requireNonNull(response.body()).string();
+            log.error(requestResult);
+            if (!StringUtils.isEmpty(requestResult)) {
+                _return = JSONObject.parseObject(requestResult);
             } else {
                 _return = null;
             }

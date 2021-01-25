@@ -1,8 +1,8 @@
-package com.bing.haagendzs.service;
+package com.bing.haagendzs.services;
 
 import com.alibaba.fastjson.JSONObject;
 
-public interface SignService {
+public interface NewSignService {
 
     JSONObject check();
 

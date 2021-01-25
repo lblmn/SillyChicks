@@ -7,7 +7,7 @@ logging:
 spring:
   jpa:
     show-sql: false
-  cloud:
-    nacos:
-      discovery:
-        ip: 212.64.18.91
+#  cloud:
+#    nacos:
+#      discovery:
+#        ip: 212.64.18.91

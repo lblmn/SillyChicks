@@ -28,18 +28,23 @@ public class MessageSender {
     public void send(List<String> uids, String msg) {
         for (String uid :
                 uids) {
-            Message message = new Message();
-            message.setContentType(Message.CONTENT_TYPE_TEXT);
-            message.setContent(msg);
-            message.setUid(uid);
-//            if (msg.contains("小象商城") || msg.contains("格乐惠购") || msg.contains("四叶草")) {
-//                message.setAppToken("AT_OSKdI36LoJMY4YjW89sAiTtYHoVwz6C3");
-//            } else {
-//                message.setAppToken("AT_KEh4Eyyl0Rkcz9C44t6yuMqLNinwTZiZ");
-//            }
-            message.setAppToken("AT_bFL4r0W3wLp4WQPXEbRDM3ZBbk5WXS2I");
-            Result<List<MessageResult>> result = WxPusher.send(message);
-            log.info(LocalDateTime.now() + "给" + uid + "发送消息" + msg + "结果" + result);
+            signSend(msg, uid);
         }
     }
+    
+    @Async
+    public void sendWithUidAndMsg(String uid, String msg) {
+        signSend(msg, uid);
+    }
+
+    private void signSend(String msg, String uid) {
+        Message message = new Message();
+        message.setContentType(Message.CONTENT_TYPE_TEXT);
+        message.setContent(msg);
+        message.setUid(uid);
+        message.setAppToken("AT_bFL4r0W3wLp4WQPXEbRDM3ZBbk5WXS2I");
+        Result<List<MessageResult>> result = WxPusher.send(message);
+        log.info(LocalDateTime.now() + "给" + uid + "发送消息" + msg + "结果" + result);
+    }
+
 }
