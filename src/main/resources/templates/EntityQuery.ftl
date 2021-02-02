@@ -1,7 +1,7 @@
 package ${packagePath}.entity;
 
 import ${packagePath}.entity.${modelClass};
-import ${packagePath}.util.questionnaire.Pager;
+import ${packagePath}.utils.Pager;
 import lombok.Data;
 
 @Data

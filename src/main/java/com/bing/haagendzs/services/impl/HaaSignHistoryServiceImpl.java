@@ -1,9 +1,9 @@
 package com.bing.haagendzs.services.impl;
 
-import com.bing.haagendzs.models.query.HaaSignHistoryQuery;
-import com.bing.haagendzs.models.HaaSignHistory;
 import com.bing.haagendzs.exceptions.HaaSignHistoryException;
 import com.bing.haagendzs.exceptions.enums.HaaSignHistoryExceptionEnum;
+import com.bing.haagendzs.models.HaaSignHistory;
+import com.bing.haagendzs.models.query.HaaSignHistoryQuery;
 import com.bing.haagendzs.repositories.HaaSignHistoryRepo;
 import com.bing.haagendzs.services.HaaSignHistoryService;
 import com.bing.haagendzs.utils.PageUtil;

@@ -1,13 +1,15 @@
 logging:
   level:
-    root: error
     com:
       bing: error
-
+    root: error
 spring:
   jpa:
     show-sql: false
-#  cloud:
-#    nacos:
-#      discovery:
-#        ip: 212.64.18.91
+    
+server:
+  ssl:
+    key-store: classpath:cert.p12
+    key-store-password: 123321...
+    key-store-type: PKCS12
+    key-alias: 1

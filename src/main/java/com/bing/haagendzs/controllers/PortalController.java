@@ -1,6 +1,7 @@
 package com.bing.haagendzs.controllers;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bing.haagendzs.constant.SystemConstant;
 import com.bing.haagendzs.services.NewSignService;
 import com.bing.haagendzs.services.SignService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,5 +34,7 @@ public class PortalController {
     public JSONObject signNew() {
         return newSignService.sign();
     }
+
+
 
 }
