@@ -6,8 +6,8 @@ import ${packagePath}.exception.${modelClass}Exception;
 import ${packagePath}.exception.enums.${modelClass}ExceptionEnum;
 import ${packagePath}.repository.${modelClass}Repo;
 import ${packagePath}.service.${modelClass}Service;
-import ${packagePath}.util.questionnaire.PageUtil;
-import ${packagePath}.util.questionnaire.ToolkitUtil;
+import ${packagePath}.utils.PageUtil;
+import ${packagePath}.utils.ToolkitUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,15 +33,16 @@ public class ${serviceClass}Impl implements ${serviceClass} {
     public Page<${modelClass}> list(${modelClass}Query ${modelName}Query) {
         ${modelClass} ${modelName} = ${modelName}Query.get${modelClass}();
         Pageable pageable = PageUtil.toPageable(${modelName}Query.getPager());
-        Specification<${modelClass}> ${modelName}Specification = (Specification<${modelClass}>) (root, criteriaQuery, criteriaBuilder) -> {
-            Predicate predicate = null;
-            if (!StringUtils.isEmpty(${modelName}.getMemo())) {
+        //Specification<${modelClass}> ${modelName}Specification = (Specification<${modelClass}>) (root, criteriaQuery, criteriaBuilder) -> {
+            //Predicate predicate = null;
+            //if (!StringUtils.isEmpty(${modelName}.getMemo())) {
             //                predicate = criteriaBuilder.like(root.get("memo").as(String.class), "%" + ${modelName}.getMemo() + "%");
-            predicate = criteriaBuilder.equal(root.get("memo").as(String.class), ${modelName}.getMemo());
-            }
-            return predicate;
-        };
-        return ${modelName}Repo.findAll(${modelName}Specification, pageable);
+            //predicate = criteriaBuilder.equal(root.get("memo").as(String.class), ${modelName}.getMemo());
+            //}
+            //return predicate;
+        //};
+        //return ${modelName}Repo.findAll(${modelName}Specification, pageable);
+        return ${modelName}Repo.findAll(pageable);
     }
 
     @Override

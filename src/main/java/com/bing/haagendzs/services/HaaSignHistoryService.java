@@ -1,7 +1,7 @@
 package com.bing.haagendzs.services;
 
-import com.bing.haagendzs.models.query.HaaSignHistoryQuery;
 import com.bing.haagendzs.models.HaaSignHistory;
+import com.bing.haagendzs.models.query.HaaSignHistoryQuery;
 import org.springframework.data.domain.Page;
 
 /**

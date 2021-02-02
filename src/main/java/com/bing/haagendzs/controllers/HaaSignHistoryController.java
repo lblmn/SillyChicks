@@ -1,8 +1,8 @@
 package com.bing.haagendzs.controllers;
 
 
-import com.bing.haagendzs.models.query.HaaSignHistoryQuery;
 import com.bing.haagendzs.models.HaaSignHistory;
+import com.bing.haagendzs.models.query.HaaSignHistoryQuery;
 import com.bing.haagendzs.services.HaaSignHistoryService;
 import com.bing.haagendzs.utils.Result;
 import com.bing.haagendzs.utils.ResultUtil;

@@ -49,7 +49,7 @@ public class HaaOrgDataServiceImpl implements HaaOrgDataService {
             Pageable pageable = PageUtil.toPageable(haaOrgDataQuery.getPager());
             orgData = haaOrgDataRepo.findAll(haaOrgDataSpecification, pageable);
         } else {
-            orgData = haaOrgDataRepo.findAll(PageUtil.newPageable());
+            orgData = haaOrgDataRepo.findAll(PageUtil.newPageable("id","asc"));
         }
         return orgData;
     }

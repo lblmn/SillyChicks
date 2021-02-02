@@ -572,7 +572,7 @@ public class TemplateUtils {
     }
 
     public static void main(String[] args) {
-        String tableName = "haa_sign_history";
+        String tableName = "sys_imgs";
         // 根据表名获取表注释
         getTableCommentByTableName(tableName);
 

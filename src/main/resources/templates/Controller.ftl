@@ -4,7 +4,8 @@ package ${packagePath}.controller;
 import ${packagePath}.entity.${modelClass}Query;
 import ${packagePath}.entity.${modelClass};
 import ${packagePath}.service.${modelClass}Service;
-import ${packagePath}.util.ResultUtil;
+import ${packagePath}.utils.Result;
+import ${packagePath}.utils.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -31,14 +32,14 @@ public class ${modelClass}Controller {
     @ApiImplicitParams({
     @ApiImplicitParam(name = "isPage", value = "是否分页", defaultValue = "true", dataType = "boolean")
     })
-        public ResultUtil list(@RequestBody(required = false) ${modelClass}Query ${modelName}Query) {
+        public Result list(@RequestBody(required = false) ${modelClass}Query ${modelName}Query) {
         return ResultUtil.ok(${modelName}Service.list(${modelName}Query));
     }
 
     @PostMapping(value = "/save")
     @ApiOperation(value = "增加或修改调查问卷${classComment}信息", notes = "传入一个调查问卷${classComment}对象进行存储，新增不带ID，修改带ID", httpMethod = "POST")
-    public ResultUtil add(@RequestBody ${modelClass} ${modelName}) {
-        ResultUtil result;
+    public Result add(@RequestBody ${modelClass} ${modelName}) {
+        Result result;
         ${modelClass} add = ${modelName}Service.add(${modelName});
         if (null != add) {
             result = ResultUtil.ok("调查问卷${classComment}信息添加或修改成功！");
@@ -51,8 +52,8 @@ public class ${modelClass}Controller {
     //
     @ApiOperation(value = "通过id删除调查问卷${classComment}", notes = "通过调查问卷${classComment}id删除调查问卷${classComment}", httpMethod = "POST")
     @PostMapping(value = "/delete")
-    public ResultUtil delete(@RequestBody String[] ids) {
-        ResultUtil result;
+    public Result delete(@RequestBody String[] ids) {
+        Result result;
         if (${modelName}Service.delete(ids)) {
             result = ResultUtil.ok("调查问卷${classComment}删除成功");
         } else {

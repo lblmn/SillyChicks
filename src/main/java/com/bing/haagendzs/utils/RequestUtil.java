@@ -1,6 +1,7 @@
 package com.bing.haagendzs.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bing.haagendzs.constant.SystemConstant;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.*;
 import org.springframework.util.StringUtils;

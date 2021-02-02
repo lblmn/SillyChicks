@@ -1,6 +1,7 @@
 package com.bing.haagendzs.utils;
 
 import lombok.extern.log4j.Log4j2;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,6 +16,12 @@ public class PageUtil {
             log.error("toPageable  构造方法参数为空");
             return null;
         }
+        return getPageable(property, sortType, page, size);
+    }
+
+    @NotNull
+    private static Pageable getPageable(String property, String sortType, int page, int size) {
+        Sort sort = null;
         if (sortType.equalsIgnoreCase("desc")) {
             sort = Sort.by(Sort.Direction.DESC, property);
         } else if (sortType.equalsIgnoreCase("asc")) {
@@ -39,5 +46,15 @@ public class PageUtil {
         int page = pager.getPageNum() - 1, size = pager.getPageSize();
         Sort sort = Sort.by(Sort.Direction.DESC, "createTime");
         return PageRequest.of(page, size, sort);
+    }
+
+    public static Pageable newPageable(String property, String sortType) {
+        Pager pager = new Pager();
+        int page = pager.getPageNum() - 1, size = pager.getPageSize();
+        if (StringUtils.isEmpty(property) || StringUtils.isEmpty(sortType)) {
+            log.error("toPageable构造方法参数property或sortType为空");
+            return null;
+        }
+        return getPageable(property, sortType, page, size);
     }
 }
