@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+    <springProperty scope="context" name="ROOT_LOG_LEVEL" source="logging.level.root"/>
+    <springProperty scope="context" name="PROJECT_LOG_LEVEL" source="logging.level.com.bing"/>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
+
+    <!--控制台日志内容规则-->
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%clr(%d{HH:mm:ss.SSS}){faint} %clr([%thread] %-5level) %clr(%logger{36}){cyan} %clr(-){faint} %msg%n"/>
+
+    <!--文件日志内容规则-->
+    <property name="FILE_LOG_PATTERN"
+              value="%d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>
+
+    <!--    &lt;!&ndash;LOGSTASH日志内容规则&ndash;&gt;-->
+    <!--    <property name="LOGSTASH_LOG_PATTERN"-->
+    <!--              value="${appName} %d{yy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"/>-->
+
+    <!--日志目录-->
+    <property name="LOG_FILE_DIR" value="/var/log/${appName}"/>
+
+    <!--日志文件后缀-->
+    <property name="FILE_EXTENSION" value="log"/>
+
+    <!--Info日志文件名规则-->
+    <property name="FILE_NAME_PATTERN_INFO"
+              value="${LOG_FILE_DIR}/infos/info.%d{yyyy-MM-dd}.%i.${FILE_EXTENSION}"/>
+
+    <!--Error日志文件名规则-->
+    <property name="FILE_NAME_PATTERN_ERROR"
+              value="${LOG_FILE_DIR}/errors/error.%d{yyyy-MM-dd}.%i.${FILE_EXTENSION}"/>
+
+    <!--最大日志文件名尺寸-->
+    <property name="MAX_FILE_SIZE" value="50MB"/>
+
+    <!--最大日志天数-->
+    <property name="MAX_HISTORY" value="30"/>
+
+    <!--当日志文件总大小大于100G时自动删除旧文件-->
+    <property name="TOTAL_SIZE_CAP" value="100GB"/>
+
+    <!--控制台日志-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <!--文件Info日志-->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss} %level [%thread][%file:%line] -%msg%n</pattern>-->
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>${FILE_NAME_PATTERN_INFO}</fileNamePattern>
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+            <totalSizeCap>${TOTAL_SIZE_CAP}</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!--文件Error日志-->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>${FILE_NAME_PATTERN_ERROR}</fileNamePattern>
+            <maxFileSize>${MAX_FILE_SIZE}</maxFileSize>
+            <maxHistory>${MAX_HISTORY}</maxHistory>
+            <totalSizeCap>${TOTAL_SIZE_CAP}</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- LOGSTASH 日志-->
+    <!--    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+    <!--        &lt;!&ndash;配置logstash的ip和端口，在logstash配置文件中&ndash;&gt;-->
+    <!--        <destination>192.168.0.73:6600</destination>-->
+    <!--        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder"/>-->
+    <!--    </appender>-->
+
+    <!--    <logger name="com.alibaba.nacos" level="ERROR"/>-->
+
+<!--    <logger name="com.bing.monkey" level="ERROR"/>-->
+
+<!--    <root level="INFO">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--        <appender-ref ref="FILE_INFO"/>-->
+<!--        <appender-ref ref="FILE_ERROR"/>-->
+<!--        &lt;!&ndash;        <appender-ref ref="LOGSTASH"/>&ndash;&gt;-->
+<!--    </root>-->
+
+    <springProfile name="dev">
+        <logger
+                name="com.bing.monkey"
+                level="${PROJECT_LOG_LEVEL}"
+                additivity="false"
+        >
+            <appender-ref ref="STDOUT"/>
+        </logger>
+
+
+        <root
+                level="${ROOT_LOG_LEVEL}"
+        >
+            <appender-ref ref="STDOUT"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger
+                name="com.bing.monkey"
+                level="${PROJECT_LOG_LEVEL}"
+                additivity="false"
+        >
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE_INFO"/>
+        </logger>
+
+        <root level="${ROOT_LOG_LEVEL}">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE_ERROR"/>
+        </root>
+    </springProfile>
+
+</configuration>

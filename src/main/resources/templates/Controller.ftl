@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Log4j2
 @RestController
 @RequestMapping("/${modelName}")
-@Api(tags = "问卷调查-${classComment}管理")
+@Api(tags = "${classComment}管理")
 public class ${modelClass}Controller {
 
     @Autowired
     private ${serviceClass} ${serviceName};
 
     @PostMapping(value = "/list")
-    @ApiOperation(value = "查询调查问卷${classComment}列表", notes = "页码pager.pageNum和每页记录数pager.pageSize必填项", httpMethod = "POST")
+    @ApiOperation(value = "查询${classComment}列表", notes = "页码pager.pageNum和每页记录数pager.pageSize必填项", httpMethod = "POST")
     @ApiImplicitParams({
     @ApiImplicitParam(name = "isPage", value = "是否分页", defaultValue = "true", dataType = "boolean")
     })
@@ -37,27 +37,27 @@ public class ${modelClass}Controller {
     }
 
     @PostMapping(value = "/save")
-    @ApiOperation(value = "增加或修改调查问卷${classComment}信息", notes = "传入一个调查问卷${classComment}对象进行存储，新增不带ID，修改带ID", httpMethod = "POST")
+    @ApiOperation(value = "增加或修改${classComment}对象", notes = "传入一个${classComment}对象进行存储，新增不带ID，修改带ID", httpMethod = "POST")
     public Result add(@RequestBody ${modelClass} ${modelName}) {
         Result result;
         ${modelClass} add = ${modelName}Service.add(${modelName});
         if (null != add) {
-            result = ResultUtil.ok("调查问卷${classComment}信息添加或修改成功！");
+            result = ResultUtil.ok("${classComment}添加或修改成功！");
         } else {
-            result = ResultUtil.err("调查问卷${classComment}信息添加或修改失败！");
+            result = ResultUtil.err("${classComment}添加或修改失败！");
         }
         return result;
     }
 
     //
-    @ApiOperation(value = "通过id删除调查问卷${classComment}", notes = "通过调查问卷${classComment}id删除调查问卷${classComment}", httpMethod = "POST")
+    @ApiOperation(value = "通过id删除${classComment}", notes = "通过${classComment}id删除${classComment}", httpMethod = "POST")
     @PostMapping(value = "/delete")
     public Result delete(@RequestBody String[] ids) {
         Result result;
         if (${modelName}Service.delete(ids)) {
-            result = ResultUtil.ok("调查问卷${classComment}删除成功");
+            result = ResultUtil.ok("${classComment}删除成功");
         } else {
-            result = ResultUtil.err("调查问卷${classComment}删除失败");
+            result = ResultUtil.err("${classComment}删除失败");
         }
         return result;
     }
