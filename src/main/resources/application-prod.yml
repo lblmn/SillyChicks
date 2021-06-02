@@ -2,11 +2,11 @@ logging:
   level:
     com:
       bing: error
-    root: error
+    root: info
 spring:
   jpa:
     show-sql: false
-    
+
 server:
   ssl:
     key-store: classpath:cert.p12

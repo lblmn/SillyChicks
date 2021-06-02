@@ -33,13 +33,13 @@
               value="${LOG_FILE_DIR}/errors/error.%d{yyyy-MM-dd}.%i.${FILE_EXTENSION}"/>
 
     <!--最大日志文件名尺寸-->
-    <property name="MAX_FILE_SIZE" value="50MB"/>
+    <property name="MAX_FILE_SIZE" value="10MB"/>
 
     <!--最大日志天数-->
     <property name="MAX_HISTORY" value="30"/>
 
     <!--当日志文件总大小大于100G时自动删除旧文件-->
-    <property name="TOTAL_SIZE_CAP" value="100GB"/>
+    <property name="TOTAL_SIZE_CAP" value="1GB"/>
 
     <!--控制台日志-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -128,12 +128,14 @@
                 level="${PROJECT_LOG_LEVEL}"
                 additivity="false"
         >
-            <appender-ref ref="STDOUT"/>
+<!--            <appender-ref ref="STDOUT"/>-->
             <appender-ref ref="FILE_INFO"/>
+            <appender-ref ref="FILE_ERROR"/>
         </logger>
 
         <root level="${ROOT_LOG_LEVEL}">
             <appender-ref ref="STDOUT"/>
+            <appender-ref ref="FILE_INFO"/>
             <appender-ref ref="FILE_ERROR"/>
         </root>
     </springProfile>
