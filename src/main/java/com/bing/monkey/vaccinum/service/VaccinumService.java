@@ -41,6 +41,7 @@ public class VaccinumService {
     private void analysis(String content) {
         Document document = Jsoup.parse(content);
         String key = document.select("body > div.wrapper > div.content_l > div.title.daoyu > div.article-info > span.time").text() + document.select("#bo").text();
+        log.error(key);
         if (!DigestUtils.md5Hex(key).equals(VaccinumConstant.KEYMD5) && VaccinumConstant.KEYMD5.length() > 1) {
             messageSenderService.sendMsg(
                     VaccinumConstant.WXPUSHER_TOKEN,

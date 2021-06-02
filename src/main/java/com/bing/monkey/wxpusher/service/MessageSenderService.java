@@ -1,6 +1,5 @@
 package com.bing.monkey.wxpusher.service;
 
-import com.bing.monkey.vaccinum.constant.VaccinumConstant;
 import com.bing.monkey.wxpusher.WxPusher;
 import com.bing.monkey.wxpusher.entity.*;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,11 @@ public class MessageSenderService {
             currentPageSize = records.getRecords().size();
             for (WxUser user :
                     records.getRecords()) {
-                notify(VaccinumConstant.WXPUSHER_TOKEN, user.getUid(), msg, url);
+                if (StringUtils.isEmpty(url)) {
+                    notify(token, user.getUid(), msg, null);
+                } else {
+                    notify(token, user.getUid(), msg, url);
+                }
             }
         } while (currentPageSize == pageSize);
     }
