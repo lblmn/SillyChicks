@@ -89,13 +89,13 @@ public class NewSignServiceImpl implements NewSignService {
             int res = signRes.getSignRes();
             switch (res) {
                 case 0:
-                    messageSenderService.notify(HaagendzsConstant.SIGNIN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signRes.getName() + "在\nHaagendazs 小程序\n签到成功", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signRes.getName() + "在\nHaagendazs 小程序\n签到成功", null);
                     break;
                 case -1:
-                    messageSenderService.notify(HaagendzsConstant.SIGNIN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signRes.getName() + "在\nHaagendazs 小程序\n检测到" + signRes.getName() + "今日已经签到,今日跳过", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signRes.getName() + "在\nHaagendazs 小程序\n检测到" + signRes.getName() + "今日已经签到,今日跳过", null);
                     break;
                 default:
-                    messageSenderService.notify(HaagendzsConstant.SIGNIN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signRes.getName() + "在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signRes.getName() + "在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
                     break;
             }
         }
@@ -107,13 +107,13 @@ public class NewSignServiceImpl implements NewSignService {
             int res = signRes.getSignRes();
             switch (res) {
                 case 0:
-                    messageSenderService.notify(HaagendzsConstant.SIGNIN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n签到成功", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n签到成功", null);
                     break;
                 case -1:
-                    messageSenderService.notify(HaagendzsConstant.SIGNIN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n检测到您今日已经签到,今日跳过", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n检测到您今日已经签到,今日跳过", null);
                     break;
                 default:
-                    messageSenderService.notify(HaagendzsConstant.SIGNIN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
                     break;
             }
         }

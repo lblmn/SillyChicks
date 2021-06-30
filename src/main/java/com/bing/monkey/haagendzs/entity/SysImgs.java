@@ -23,7 +23,8 @@ import java.io.Serializable;
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "sys_imgs", description = "")
+@Table(name = "sys_imgs")
+@ApiModel(value = "sys_imgs", description = "系统图片")
 public class SysImgs implements Serializable {
 
     @ApiModelProperty(value = "")

@@ -16,7 +16,7 @@ public class SignSchedule {
     @Resource
     private NewSignService newSignService;
 
-    @Scheduled(cron = "0 0 8 * * ?")//多长时间执行一次  根据自己的需要去改
+    @Scheduled(cron = "0 0 8 * * ?")//多长时间执行一次根据自己的需要去改
     public void sign() {
         String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss:SS"));
         log.error(now + "开始签到");

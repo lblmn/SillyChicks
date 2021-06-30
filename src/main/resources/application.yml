@@ -1,13 +1,8 @@
 spring:
   profiles:
-    #    active: prod
-    active: dev
+    active: prod
+  #    active: dev
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://124.70.129.91:3306/python_mysql?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false
-    username: root
-    password: KXTsoft@2010
-
     hikari:
       minimum-idle: 5
       maximum-pool-size: 20

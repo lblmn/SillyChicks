@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Log4j2
 @RestController
-@RequestMapping("/haaSignHistory")
+@RequestMapping("/haaSignHis")
 @Api(tags = "签到记录-管理")
-public class HaaSignHistoryController {
+public class HaaSignHisController {
 
     @Autowired
     private HaaSignHistoryService haaSignHistoryService;

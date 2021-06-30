@@ -29,6 +29,7 @@ import java.time.format.DateTimeFormatter;
 @Accessors(chain = true)
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "haa_org_data")
 @ApiModel(value = "haa_org_data", description = "原始信息表")
 public class HaaOrgData implements Serializable {
 

@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
 * @program: freemarkerTest
-* @description: 数据表student_haagendazstoken的实体类
+* @description: 数据表_haagendazstoken的实体类
 * @author: HelloWorld
 * @create: 2020-11-29 22:16:21
 **/
@@ -23,12 +23,12 @@ import java.io.Serializable;
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@Table(name = "haatoken")
-@ApiModel(value = "student_haagendazstoken", description = "token类")
+@Table(name = "haa_token")
+@ApiModel(value = "haa_token", description = "token类")
 public class Haatoken implements Serializable  {
 
-        @ApiModelProperty(value = "id")
         @Id
+        @ApiModelProperty(value = "id")
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "id")
         private Integer id;
