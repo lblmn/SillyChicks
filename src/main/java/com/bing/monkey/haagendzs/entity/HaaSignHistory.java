@@ -23,10 +23,11 @@ import java.io.Serializable;
 @EntityListeners(AuditingEntityListener.class)
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value = "haa_sign_history", description = "")
+@Table(name = "haa_sign_his")
+@ApiModel(value = "haa_sign_his", description = "签到历史记录")
 public class HaaSignHistory implements Serializable  {
 
-        @ApiModelProperty(value = "")
+        @ApiModelProperty(value = "ID")
         @Id
         @GeneratedValue(strategy = GenerationType.AUTO)
         @Column(name = "id")

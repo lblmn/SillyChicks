@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
+/**
+ * @author admin
+ */
 @Log4j2
 @RestController
-@RequestMapping("/studentHaagendazstoken")
+@RequestMapping("/haaToken")
 @Api(tags = "问卷调查-管理")
-public class StudentHaagendazstokenController {
+public class HaaTokenController {
 
     @Autowired
     private StudentHaagendazstokenService studentHaagendazstokenService;
