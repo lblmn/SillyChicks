@@ -54,20 +54,19 @@ public class NewSignServiceImpl implements NewSignService {
         pager.setPage(false);
         haaOrgDataQuery.setPager(pager);
         Page<HaaOrgData> list = haaOrgDataService.list(haaOrgDataQuery);
-        // 从数据库中取出token，并获取新的token
-        Haatoken one = haatokenRepo.getOne(1);
-        String newToken = RequestUtil.getNewToken(one.getToken());
         // 使用新的token进行签到，并汇聚结果
-        for (HaaOrgData haaOrgData :
-                list) {
+        list.stream().forEach(haaOrgData -> {
+            // 从数据库中取出token，并获取新的token
+            Haatoken one = haatokenRepo.getOne(1);
+            String newToken = RequestUtil.getNewToken(one.getToken());
             resList.add(new SignRes(haaOrgData, RequestUtil.signIn(newToken, haaOrgData.getUnionId())));
-        }
+            one.setToken(newToken);
+            haatokenRepo.save(one);
+        });
         // 推送结果
         sendMsgToEvery(resList);
         sendMsgToGod(resList);
         // 更新token
-        one.setToken(newToken);
-        haatokenRepo.save(one);
         // 保存签到记录
         for (SignRes sr :
                 resList) {
