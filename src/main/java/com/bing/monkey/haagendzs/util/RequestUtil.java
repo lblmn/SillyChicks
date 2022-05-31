@@ -1,18 +1,16 @@
 package com.bing.monkey.haagendzs.util;
 
 import com.alibaba.fastjson.JSONObject;
+import com.bing.monkey.haagendzs.entity.HaaOrgData;
 import lombok.extern.log4j.Log4j2;
 import okhttp3.*;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.util.StringUtils;
-import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 @Log4j2
 public class RequestUtil {
@@ -22,7 +20,7 @@ public class RequestUtil {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\r\n    \"partner\": \"apitest\",\r\n    \"secret\": \"111111\",\r\n    \"openid\": \"gh_68065de13ad5\",\r\n    \"app-id\": \"wx3656c2a2353eb377\"\r\n}");
+        RequestBody body = RequestBody.create(mediaType, "{\r\n    \"partner\": \"apitest\",\r\n    \"secret\": \"Ou0HT@0W6e\",\r\n    \"openid\": \"gh_68065de13ad5\",\r\n    \"app-id\": \"wx3656c2a2353eb377\"\r\n}");
         Request request = new Request.Builder()
                 .url("https://haagendazs.smarket.com.cn/v1/api/token")
                 .method("POST", body)
@@ -40,15 +38,15 @@ public class RequestUtil {
         return newToken;
     }
 
-    public static Integer signIn(String token, String unique) {
+    public static Integer signIn(String token, HaaOrgData haaOrgData) {
         int retry = 0;
-        int code = doSignIn(token, unique).getInteger("code");
+        int code = doSignIn(token, haaOrgData).getInteger("code");
         while (code != 0 && code != -1) {
             if (retry >= 3) {
                 break;
             }
             token = RequestUtil.getNewToken(token);
-            code = RequestUtil.doSignIn(token, unique).getInteger("code");
+            code = RequestUtil.doSignIn(token, haaOrgData).getInteger("code");
             retry++;
         }
         return code;
@@ -100,17 +98,30 @@ public class RequestUtil {
      * }
      *
      * @param token
-     * @param unique
+     * @param haaOrgData
      * @return
      */
-    private static JSONObject doSignIn(String token, String unique) {
+    private static JSONObject doSignIn(String token, HaaOrgData haaOrgData) {
         JSONObject _return = new JSONObject();
+        long currentTimeMillis = System.currentTimeMillis();
+        String encryptResult = getEncryptResult(String.valueOf(currentTimeMillis), haaOrgData.getUnionId(), haaOrgData.getOpenId());
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType,
+                "{\r\n    " +
+                        "\"unionId\": \"" + haaOrgData.getUnionId() + "\",\r\n    " +
+                        "\"openId\": \"" + haaOrgData.getOpenId() + "\",\r\n    " +
+                        "\"sign\": \"" + encryptResult + "\",\r\n    " +
+                        "\"socialHubid\": \"" + haaOrgData.getSocialHubId() + "\",\r\n    " +
+                        "\"mobile\": \"" + haaOrgData.getMobile() + "\",\r\n    " +
+                        "\"timestamp\": " + currentTimeMillis + "\r\n" +
+                        "}");
         Request request = new Request.Builder()
-                .url("https://haagendazs.smarket.com.cn/v1/api/wxapp/daily/signIn?unionId=" + unique)
-                .method("GET", null)
+                .url("https://haagendazs.smarket.com.cn/v1/api/wxapp/daily/signIn")
+                .method("POST", body)
                 .addHeader("Authorization", " Bearer " + token)
+                .addHeader("Content-Type", "application/json")
                 .build();
         try {
             Response response = client.newCall(request).execute();
@@ -127,31 +138,26 @@ public class RequestUtil {
         return _return;
     }
 
-    private String getMdRes(String timestamp, String unionId) {
-        StringBuffer temp = new StringBuffer();
+    private static String getEncryptResult(String timestamp, String unionId, String openId) {
         String encryptionRes = "";
-        if (unionId != null && unionId.length() > 0) {
-            char[] chars = unionId.toCharArray();
-            for (int i = 0; i < chars.length; i++) {
-                temp.append(i)
-                        .append("=")
-                        .append(chars[i])
-                        .append("&");
-            }
-            temp.append("timestamp=")
-                    .append(timestamp);
-            Arrays.sort(temp.toString().toCharArray());
-            System.out.println("temp.toString() = " + temp);
-            encryptionRes = DigestUtils.md5Hex(temp.toString()).toLowerCase(Locale.ROOT);
+        StringBuilder temp = new StringBuilder();
+        StringBuilder needEncryptedStr = new StringBuilder();
+        temp.append("unionId")
+                .append("=")
+                .append(unionId)
+                .append("&openId")
+                .append("=")
+                .append(openId)
+                .append("&timestamp=")
+                .append(timestamp);
+        char[] encryptBeforeChars = temp.toString().toCharArray();
+        Arrays.sort(encryptBeforeChars);
+        for (int i = 0; i < encryptBeforeChars.length; i++) {
+            needEncryptedStr.append(encryptBeforeChars[i]);
         }
+        System.out.println("needEncryptedStr = " + needEncryptedStr);
+        encryptionRes = DigestUtils.md5Hex(needEncryptedStr.toString()).toLowerCase(Locale.ROOT);
+        encryptionRes = DigestUtils.md5Hex(encryptionRes + ",key=HE8@EqkD7GN4").toLowerCase(Locale.ROOT);
         return encryptionRes;
-    }
-
-    @Test
-    public void testSomeThings() {
-        char[] str = "onoRB5l_PxGubiPtAJ3m8ORaTSTs".toCharArray();
-        Arrays.sort(str);
-        System.out.println("str = " + Arrays.toString(str));
-//        System.out.println(getMdRes("1631894912372", "onoRB5l_PxGubiPtAJ3m8ORaTSTs"));
     }
 }
