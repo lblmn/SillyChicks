@@ -43,9 +43,21 @@ public class HaaOrgData implements Serializable {
     @Column(name = "union_id")
     private String unionId;
 
+    @ApiModelProperty(value = "微信唯一识别")
+    @Column(name = "open_id")
+    private String openId;
+
     @ApiModelProperty(value = "通知uid")
     @Column(name = "uid")
     private String uid;
+
+    @ApiModelProperty(value = "socialHubid")
+    @Column(name = "social_hub_id")
+    private String socialHubId;
+
+    @ApiModelProperty(value = "手机号码")
+    @Column(name = "mobile")
+    private String mobile;
 
     @ApiModelProperty(value = "姓名")
     @Column(name = "name")

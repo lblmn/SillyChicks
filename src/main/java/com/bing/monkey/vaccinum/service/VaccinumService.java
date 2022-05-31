@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.Objects;
 
 @Log4j2
 @Service
@@ -22,16 +23,15 @@ public class VaccinumService {
     private MessageSenderService messageSenderService;
 
     public void getPageContent() {
-        String md5 = "";
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url("http://xa.bendibao.com/live/2019121/66349.shtm")
+                .url(VaccinumConstant.NOTICEURL)
                 .method("GET", null)
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            String content = response.body().string();
+            String content = Objects.requireNonNull(response.body()).string();
             analysis(content);
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,15 +40,24 @@ public class VaccinumService {
 
     private void analysis(String content) {
         Document document = Jsoup.parse(content);
-        String key = document.select("body > div.wrapper > div.content_l > div.title.daoyu > div.article-info > span.time").text() + document.select("#bo").text();
-        log.error(key);
+        String key = document.select("body > div.wrapper > div.content_l > div.title.daoyu > div.article-info > span.time").text();
         if (!DigestUtils.md5Hex(key).equals(VaccinumConstant.KEYMD5) && VaccinumConstant.KEYMD5.length() > 1) {
+            log.error(key);
             messageSenderService.sendMsg(
                     VaccinumConstant.WXPUSHER_TOKEN,
-                    "HPV疫苗相关消息有新动态，请点击下面的链接查看",
-                    "http://xa.bendibao.com/live/2019121/66349.shtm"
+                    VaccinumConstant.NOTICEMSG,
+                    VaccinumConstant.NOTICEURL
             );
         }
+        VaccinumConstant.KEYMD5 = DigestUtils.md5Hex(key);
+    }
+
+    public void testMsg() {
+        messageSenderService.sendMsg(
+                VaccinumConstant.WXPUSHER_TOKEN,
+                "测试",
+                VaccinumConstant.NOTICEURL
+        );
     }
 
 }

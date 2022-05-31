@@ -17,6 +17,7 @@ import com.bing.monkey.haagendzs.util.RequestUtil;
 import com.bing.monkey.wxpusher.service.MessageSenderService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -54,15 +55,18 @@ public class NewSignServiceImpl implements NewSignService {
         pager.setPage(false);
         haaOrgDataQuery.setPager(pager);
         Page<HaaOrgData> list = haaOrgDataService.list(haaOrgDataQuery);
-        // 使用新的token进行签到，并汇聚结果
+        // 从数据库中取出token，并获取新的token
+        Haatoken one = haatokenRepo.getOne(1);
+        String newToken = RequestUtil.getNewToken(one.getToken());
         list.stream().forEach(haaOrgData -> {
-            // 从数据库中取出token，并获取新的token
-            Haatoken one = haatokenRepo.getOne(1);
-            String newToken = RequestUtil.getNewToken(one.getToken());
-            resList.add(new SignRes(haaOrgData, RequestUtil.signIn(newToken, haaOrgData.getUnionId())));
-            one.setToken(newToken);
-            haatokenRepo.save(one);
+            if (StringUtils.isEmpty(haaOrgData.getOpenId())) {
+                return;
+            }
+            // 使用新的token进行签到，并汇聚结果
+            resList.add(new SignRes(haaOrgData, RequestUtil.signIn(newToken, haaOrgData)));
         });
+        one.setToken(newToken);
+        haatokenRepo.save(one);
         // 推送结果
         sendMsgToEvery(resList);
         sendMsgToGod(resList);
@@ -81,6 +85,11 @@ public class NewSignServiceImpl implements NewSignService {
         return _return;
     }
 
+    /**
+     * 给开发者通知
+     *
+     * @param resList
+     */
     private void sendMsgToGod(List<SignRes> resList) {
 
         for (SignRes signRes :
@@ -100,19 +109,24 @@ public class NewSignServiceImpl implements NewSignService {
         }
     }
 
+    /**
+     * 给订阅者进行通知
+     *
+     * @param resList
+     */
     private void sendMsgToEvery(List<SignRes> resList) {
         for (SignRes signRes :
                 resList) {
             int res = signRes.getSignRes();
             switch (res) {
                 case 0:
-                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n签到成功", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到成功\n签到机器人为您在\nHaagendazs 小程序\n签到成功", null);
                     break;
                 case -1:
-                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n检测到您今日已经签到,今日跳过", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到成功\n签到机器人为您在\nHaagendazs 小程序\n检测到您今日已经签到,今日跳过", null);
                     break;
                 default:
-                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到机器人为您在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signRes.getUid(), "\n签到成功\n签到机器人为您在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
                     break;
             }
         }
