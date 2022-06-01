@@ -38,9 +38,10 @@ public class RequestUtil {
         return newToken;
     }
 
-    public static Integer signIn(String token, HaaOrgData haaOrgData) {
+    public static JSONObject signIn(String token, HaaOrgData haaOrgData) {
         int retry = 0;
-        int code = doSignIn(token, haaOrgData).getInteger("code");
+        JSONObject requestResult = doSignIn(token, haaOrgData);
+        Integer code = requestResult.getInteger("code");
         while (code != 0 && code != -1) {
             if (retry >= 3) {
                 break;
@@ -49,7 +50,7 @@ public class RequestUtil {
             code = RequestUtil.doSignIn(token, haaOrgData).getInteger("code");
             retry++;
         }
-        return code;
+        return requestResult;
     }
 
     /**
@@ -139,23 +140,21 @@ public class RequestUtil {
     }
 
     private static String getEncryptResult(String timestamp, String unionId, String openId) {
-        String encryptionRes = "";
-        StringBuilder temp = new StringBuilder();
+        String encryptionRes;
         StringBuilder needEncryptedStr = new StringBuilder();
-        temp.append("unionId")
-                .append("=")
-                .append(unionId)
-                .append("&openId")
-                .append("=")
-                .append(openId)
-                .append("&timestamp=")
-                .append(timestamp);
-        char[] encryptBeforeChars = temp.toString().toCharArray();
+        String temp = "unionId" +
+                "=" +
+                unionId +
+                "&openId" +
+                "=" +
+                openId +
+                "&timestamp=" +
+                timestamp;
+        char[] encryptBeforeChars = temp.toCharArray();
         Arrays.sort(encryptBeforeChars);
         for (int i = 0; i < encryptBeforeChars.length; i++) {
             needEncryptedStr.append(encryptBeforeChars[i]);
         }
-        System.out.println("needEncryptedStr = " + needEncryptedStr);
         encryptionRes = DigestUtils.md5Hex(needEncryptedStr.toString()).toLowerCase(Locale.ROOT);
         encryptionRes = DigestUtils.md5Hex(encryptionRes + ",key=HE8@EqkD7GN4").toLowerCase(Locale.ROOT);
         return encryptionRes;
