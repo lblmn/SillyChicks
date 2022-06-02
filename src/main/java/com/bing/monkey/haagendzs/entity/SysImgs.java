@@ -2,13 +2,14 @@ package com.bing.monkey.haagendzs.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
+import org.hibernate.Hibernate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @program: freemarkerTest
@@ -19,9 +20,11 @@ import java.io.Serializable;
 
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @Table(name = "sys_imgs")
 @ApiModel(value = "sys_imgs", description = "系统图片")
@@ -52,4 +55,17 @@ public class SysImgs implements Serializable {
     @ApiModelProperty(value = "")
     @Column(name = "height")
     private String height;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        SysImgs sysImgs = (SysImgs) o;
+        return id != null && Objects.equals(id, sysImgs.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

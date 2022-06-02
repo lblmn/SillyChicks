@@ -1,6 +1,7 @@
 package com.bing.monkey;
 
 import com.bing.monkey.haagendzs.service.NewSignService;
+import com.bing.monkey.haagendzs.service.impl.SysImgsServiceImpl;
 import com.bing.monkey.vaccinum.service.ZmyyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
