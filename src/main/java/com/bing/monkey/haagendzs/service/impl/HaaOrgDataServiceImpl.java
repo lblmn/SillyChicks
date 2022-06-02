@@ -34,7 +34,7 @@ public class HaaOrgDataServiceImpl implements HaaOrgDataService {
         Specification<HaaOrgData> haaOrgDataSpecification;
         if (null != haaOrgDataQuery) {
             HaaOrgData haaOrgData = haaOrgDataQuery.getHaaOrgData();
-            haaOrgDataSpecification = (Specification<HaaOrgData>) (root, criteriaQuery, criteriaBuilder) -> {
+            haaOrgDataSpecification = (root, criteriaQuery, criteriaBuilder) -> {
                 Predicate predicate = null;
                 if (null != haaOrgData) {
                     if (!StringUtils.isEmpty(haaOrgData.getMemo())) {

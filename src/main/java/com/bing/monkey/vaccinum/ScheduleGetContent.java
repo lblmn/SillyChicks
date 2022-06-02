@@ -17,7 +17,7 @@ public class ScheduleGetContent {
     @Autowired
     private ZmyyService zmyyService;
 
-    @Scheduled(cron = "0 0/30 * * * ?")//多长时间执行一次 根据自己的需要去改
+//    @Scheduled(cron = "0 0/30 * * * ?")//多长时间执行一次 根据自己的需要去改
     public void sign() {
         vaccinumService.getPageContent();
         zmyyService.getClinicList();

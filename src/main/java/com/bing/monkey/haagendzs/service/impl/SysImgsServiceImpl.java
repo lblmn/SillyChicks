@@ -94,13 +94,13 @@ public class SysImgsServiceImpl implements SysImgsService {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
-                .url("https://api.blogbig.cn/random/api.php?return=json")
+                .url("https://api.btstu.cn/sjbz/api.php?lx=meizi&format=json")
                 .method("GET", null)
                 .build();
         try {
             Response response = client.newCall(request).execute();
             JSONObject info = JSONObject.parseObject(Objects.requireNonNull(response.body()).string());
-            String acgurl = info.getString("acgurl");
+            String acgurl = info.getString("imgurl");
             List<SysImgs> allByAcgurl = sysImgsRepo.findAllByAcgurl(acgurl);
             if (allByAcgurl.size() == 0) {
                 SysImgs sysImgs = new SysImgs();
@@ -108,7 +108,6 @@ public class SysImgsServiceImpl implements SysImgsService {
                 sysImgs.setCode(info.getString("code"));
                 sysImgs.setHeight(info.getString("height"));
                 sysImgs.setWidth(info.getString("width"));
-                sysImgs.setSize(info.getString("size"));
                 add(sysImgs);
             } else {
                 log.info("已经存在该acgurl记录");
