@@ -36,6 +36,42 @@ public class HaaSignHisController {
         return ResultUtil.ok(haaSignHistoryService.list(haaSignHistoryQuery));
     }
 
+    @PostMapping(value = "/list/users")
+    @ApiOperation(value = "查询签到人员列表", notes = "页码pager.pageNum和每页记录数pager.pageSize必填项", httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "isPage", value = "是否分页", defaultValue = "true", dataType = "boolean")
+    })
+    public Result listUser() {
+        return ResultUtil.ok(haaSignHistoryService.listUser());
+    }
+
+    @PostMapping(value = "/list/timeRange")
+    @ApiOperation(value = "查询签到时间范围", notes = "页码pager.pageNum和每页记录数pager.pageSize必填项", httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "isPage", value = "是否分页", defaultValue = "true", dataType = "boolean")
+    })
+    public Result listTimeRange() {
+        return ResultUtil.ok(haaSignHistoryService.listTimeRange());
+    }
+
+    @PostMapping(value = "/list/years")
+    @ApiOperation(value = "查询签到年份列表", notes = "页码pager.pageNum和每页记录数pager.pageSize必填项", httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "isPage", value = "是否分页", defaultValue = "true", dataType = "boolean")
+    })
+    public Result listYear() {
+        return ResultUtil.ok(haaSignHistoryService.listYear());
+    }
+
+    @PostMapping(value = "/list/months")
+    @ApiOperation(value = "查询签到月份列表", notes = "页码pager.pageNum和每页记录数pager.pageSize必填项", httpMethod = "POST")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "isPage", value = "是否分页", defaultValue = "true", dataType = "boolean")
+    })
+    public Result listMonth() {
+        return ResultUtil.ok(haaSignHistoryService.listMonth());
+    }
+
     @PostMapping(value = "/save")
     @ApiOperation(value = "增加或修改签到记录信息", notes = "传入一个签到记录对象进行存储，新增不带ID，修改带ID", httpMethod = "POST")
     public Result add(@RequestBody HaaSignHistory haaSignHistory) {
