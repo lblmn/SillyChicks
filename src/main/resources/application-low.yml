@@ -1,0 +1,18 @@
+logging:
+  level:
+    com:
+      bing: info
+    root: info
+
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    # 在容器中访问宿主机的服务
+    url: jdbc:mysql://158.51.98.242:14130/monkey_house?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai&autoReconnect=true&failOverReadOnly=false
+    username: monkey_house
+    password: kSbeHLre2mDbjdWr
+  jpa:
+    show-sql: true
+
+server:
+  port: 8998
