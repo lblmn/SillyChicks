@@ -96,39 +96,33 @@
 
     <!--    <logger name="com.alibaba.nacos" level="ERROR"/>-->
 
-<!--    <logger name="com.bing.monkey" level="ERROR"/>-->
+    <!--    <logger name="com.bing.monkey" level="ERROR"/>-->
 
-<!--    <root level="INFO">-->
-<!--        <appender-ref ref="STDOUT"/>-->
-<!--        <appender-ref ref="FILE_INFO"/>-->
-<!--        <appender-ref ref="FILE_ERROR"/>-->
-<!--        &lt;!&ndash;        <appender-ref ref="LOGSTASH"/>&ndash;&gt;-->
-<!--    </root>-->
+    <!--    <root level="INFO">-->
+    <!--        <appender-ref ref="STDOUT"/>-->
+    <!--        <appender-ref ref="FILE_INFO"/>-->
+    <!--        <appender-ref ref="FILE_ERROR"/>-->
+    <!--        &lt;!&ndash;        <appender-ref ref="LOGSTASH"/>&ndash;&gt;-->
+    <!--    </root>-->
 
-    <springProfile name="dev">
-        <logger
-                name="com.bing.monkey"
+    <springProfile name="!prod">
+        <logger name="com.bing.monkey"
                 level="${PROJECT_LOG_LEVEL}"
-                additivity="false"
-        >
+                additivity="false">
             <appender-ref ref="STDOUT"/>
         </logger>
 
 
-        <root
-                level="${ROOT_LOG_LEVEL}"
-        >
+        <root level="${ROOT_LOG_LEVEL}">
             <appender-ref ref="STDOUT"/>
         </root>
     </springProfile>
 
     <springProfile name="prod">
-        <logger
-                name="com.bing.monkey"
+        <logger name="com.bing.monkey"
                 level="${PROJECT_LOG_LEVEL}"
-                additivity="false"
-        >
-<!--            <appender-ref ref="STDOUT"/>-->
+                additivity="false">
+            <appender-ref ref="STDOUT"/>
             <appender-ref ref="FILE_INFO"/>
             <appender-ref ref="FILE_ERROR"/>
         </logger>

@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "generate.ip",
+      "type": "java.lang.String",
+      "description": "Description for generate.ip."
+    },
+    {
+      "name": "generate.username",
+      "type": "java.lang.String",
+      "description": "Description for generate.username."
+    },
+    {
+      "name": "generate.password",
+      "type": "java.lang.String",
+      "description": "Description for generate.password."
+    },
+    {
+      "name": "generate.database",
+      "type": "java.lang.String",
+      "description": "Description for generate.database."
+    }
+  ] }

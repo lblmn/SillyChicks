@@ -1,6 +1,7 @@
 spring:
   profiles:
 #    active: prod
+    #    active: low
     active: dev
   datasource:
     hikari:

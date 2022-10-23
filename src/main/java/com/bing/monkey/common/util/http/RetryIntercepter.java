@@ -3,8 +3,7 @@ package com.bing.monkey.common.util.http;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import java.io.IOException;
+import org.jetbrains.annotations.NotNull;
 
 
 public class RetryIntercepter implements Interceptor{
@@ -14,8 +13,9 @@ public class RetryIntercepter implements Interceptor{
         this.maxRetryCount = maxRetryCount;
     }
 
+    @NotNull
     @Override
-    public Response intercept(Chain chain) throws IOException {
+    public Response intercept(@NotNull Chain chain) {
         return retry(chain);
     }
 

@@ -1,7 +1,7 @@
 package com.bing.monkey.haagendzs.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.bing.monkey.common.constant.Localconstant;
+import com.bing.monkey.common.constant.LocalConstant;
 import com.bing.monkey.common.entity.Pager;
 import com.bing.monkey.haagendzs.constant.HaagendzsConstant;
 import com.bing.monkey.haagendzs.entity.HaaOrgData;
@@ -83,7 +83,7 @@ public class NewSignServiceImpl implements NewSignService {
     /**
      * 给开发者通知
      *
-     * @param haaSignHistories
+     * @param haaSignHistories 签到的历史信息
      */
     private void sendMsgToGod(List<HaaSignHistory> haaSignHistories) {
 
@@ -92,13 +92,13 @@ public class NewSignServiceImpl implements NewSignService {
             int res = signHistory.getResult();
             switch (res) {
                 case 0:
-                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n签到成功", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, LocalConstant.GOD_UID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n签到成功", null);
                     break;
                 case -1:
-                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n检测到" + signHistory.getName() + "今日已经签到,今日跳过", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, LocalConstant.GOD_UID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n检测到" + signHistory.getName() + "今日已经签到,今日跳过", null);
                     break;
                 default:
-                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, Localconstant.GODUID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
+                    messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, LocalConstant.GOD_UID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n签到失败，失败次数过多，请手动签到", null);
                     break;
             }
         }
@@ -107,7 +107,7 @@ public class NewSignServiceImpl implements NewSignService {
     /**
      * 给订阅者进行通知
      *
-     * @param haaSignHistories
+     * @param haaSignHistories 签到的历史信息
      */
     private void sendMsgToEvery(List<HaaSignHistory> haaSignHistories) {
         for (HaaSignHistory signHistory :
