@@ -1,7 +1,7 @@
 package com.bing.monkey;
 
 import com.bing.monkey.haagendzs.service.NewSignService;
-import com.bing.monkey.haagendzs.service.impl.SysImgsServiceImpl;
+import com.bing.monkey.test.TestService;
 import com.bing.monkey.vaccinum.service.ZmyyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +21,13 @@ public class InitApp implements ApplicationRunner {
     @Autowired
     private NewSignService newSignService;
 
+    @Autowired
+    private TestService testService;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
 //        zmyyService.getClinicList();
 //        newSignService.sign();
+        testService.start();
     }
 }

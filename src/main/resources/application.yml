@@ -1,6 +1,6 @@
 spring:
   profiles:
-#    active: prod
+    #    active: prod
     #    active: low
     active: dev
   datasource:
@@ -31,6 +31,9 @@ spring:
 #      discovery:
 #        server-addr: 124.70.154.45:8848
 
+server:
+  servlet:
+    context-path: /monkey
 
 generate:
   ip: 124.70.129.91

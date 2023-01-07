@@ -16,9 +16,4 @@ spring:
     show-sql: false
 
 server:
-  ssl:
-    key-store: classpath:cert.p12
-    key-store-password: 123321...
-    key-store-type: PKCS12
-    key-alias: 1
   port: 8998
