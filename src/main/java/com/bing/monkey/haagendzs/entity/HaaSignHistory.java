@@ -47,7 +47,7 @@ public class HaaSignHistory implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ApiModelProperty(value = "签到结果（1-成功，3-签到失败）")
+    @ApiModelProperty(value = "签到结果（1-成功，2-已经手动签到，3-签到失败）")
     @Column(name = "result")
     private Integer result;
 

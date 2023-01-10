@@ -1,8 +1,8 @@
 spring:
   profiles:
     #    active: prod
-    #    active: low
-    active: dev
+    active: low
+  #    active: dev
   datasource:
     hikari:
       minimum-idle: 5
