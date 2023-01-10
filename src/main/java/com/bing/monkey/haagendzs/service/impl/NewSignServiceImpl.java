@@ -64,7 +64,9 @@ public class NewSignServiceImpl implements NewSignService {
             String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             HaaSignHistory haaSignHistory = new HaaSignHistory();
             haaSignHistory.setName(haaOrgData.getName());
-            haaSignHistory.setResult(signInResult.getInteger("code") == 0 ? 1 : 3);
+            haaSignHistory.setResult(
+                    signInResult.getInteger("code") == 0 ? 1
+                            : signInResult.getInteger("code") == -1 ? 2 : 3);
             haaSignHistory.setSignDate(date);
             haaSignHistory.setMemo(signInResult.getString("msg"));
             haaSignHistory.setUid(haaOrgData.getUid());
@@ -75,7 +77,7 @@ public class NewSignServiceImpl implements NewSignService {
         haatokenRepo.save(one);
         // 推送结果
         sendMsgToEvery(haaSignHistories);
-        sendMsgToGod(haaSignHistories);
+//        sendMsgToGod(haaSignHistories);
         _return.put("result", haaSignHistories);
         return _return;
     }
@@ -91,10 +93,10 @@ public class NewSignServiceImpl implements NewSignService {
                 haaSignHistories) {
             int res = signHistory.getResult();
             switch (res) {
-                case 0:
+                case 1:
                     messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, LocalConstant.GOD_UID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n签到成功", null);
                     break;
-                case -1:
+                case 2:
                     messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, LocalConstant.GOD_UID, "\n签到机器人为" + signHistory.getName() + "在\nHaagendazs 小程序\n检测到" + signHistory.getName() + "今日已经签到,今日跳过", null);
                     break;
                 default:
@@ -114,10 +116,10 @@ public class NewSignServiceImpl implements NewSignService {
                 haaSignHistories) {
             int res = signHistory.getResult();
             switch (res) {
-                case 0:
+                case 1:
                     messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signHistory.getUid(), "\n签到成功\n签到机器人为您在\nHaagendazs 小程序\n签到成功", null);
                     break;
-                case -1:
+                case 2:
                     messageSenderService.notify(HaagendzsConstant.SIGN_IN_TOKEN, signHistory.getUid(), "\n签到成功\n签到机器人为您在\nHaagendazs 小程序\n检测到您今日已经签到,今日跳过", null);
                     break;
                 default:

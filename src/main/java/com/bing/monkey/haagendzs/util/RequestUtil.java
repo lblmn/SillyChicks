@@ -152,11 +152,11 @@ public class RequestUtil {
                 timestamp;
         char[] encryptBeforeChars = temp.toCharArray();
         Arrays.sort(encryptBeforeChars);
-        for (int i = 0; i < encryptBeforeChars.length; i++) {
-            needEncryptedStr.append(encryptBeforeChars[i]);
+        for (char encryptBeforeChar : encryptBeforeChars) {
+            needEncryptedStr.append(encryptBeforeChar);
         }
         encryptionRes = DigestUtils.md5Hex(needEncryptedStr.toString()).toLowerCase(Locale.ROOT);
-        encryptionRes = DigestUtils.md5Hex(encryptionRes + ",key=HE8@EqkD7GN4").toLowerCase(Locale.ROOT);
+        encryptionRes = DigestUtils.md5Hex(encryptionRes + "," + DigestUtils.md5Hex("key=!TDD7@DDZ6AGN3").toLowerCase(Locale.ROOT)).toLowerCase(Locale.ROOT);
         return encryptionRes;
     }
 }

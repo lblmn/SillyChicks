@@ -28,6 +28,6 @@ public class InitApp implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
 //        zmyyService.getClinicList();
 //        newSignService.sign();
-        testService.start();
+//        testService.start();
     }
 }
